@@ -460,12 +460,14 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "calc.l"
-#line 2 "calc.l"
+#line 1 "calc2.l"
+#line 2 "calc2.l"
 	#include <iostream>
 	using namespace std;
 	#define YY_DECL extern "C" int yylex()
-#line 469 "lex.yy.c"
+
+	#include "calc2.tab.h" //to get token types that we return from bison
+#line 471 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -652,9 +654,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 7 "calc.l"
+#line 9 "calc2.l"
 
-#line 658 "lex.yy.c"
+#line 660 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -739,56 +741,56 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "calc.l"
-{ cout<<"PLUS"<<endl; }
+#line 10 "calc2.l"
+{ return ADD; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "calc.l"
-{ cout<<"MINUS"<<endl; }
+#line 11 "calc2.l"
+{ return SUB; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "calc.l"
-{ cout<<"MULTIPLY"<<endl; }
+#line 12 "calc2.l"
+{ return MUL; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "calc.l"
-{ cout<<"DIVIDE"<<endl; }
+#line 13 "calc2.l"
+{ return DIV; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "calc.l"
-{ cout<<"POWER"<<endl; }
+#line 14 "calc2.l"
+{ return POW; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 13 "calc.l"
-{ cout<<"NUMBER"<<endl; }
+#line 15 "calc2.l"
+{ yylval.ival = atoi(yytext); return NUMBER; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 14 "calc.l"
-{ cout<<"NEWLINE"<<endl; }
+#line 16 "calc2.l"
+{ return EOL; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 15 "calc.l"
-{ }
+#line 17 "calc2.l"
+; //ignore white space
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 16 "calc.l"
-{ cout<<"Mystery character : "<<yytext<<endl; }
+#line 18 "calc2.l"
+; //ignore any other char
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 17 "calc.l"
+#line 19 "calc2.l"
 ECHO;
 	YY_BREAK
-#line 792 "lex.yy.c"
+#line 794 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1786,14 +1788,9 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 17 "calc.l"
+#line 19 "calc2.l"
 
 
 
-/* Code to run it :
 
-flex calc.l
-g++ lex.yy.c -lfl
-
-*/
 

@@ -8,6 +8,7 @@
 	extern "C" int yyparse();
 
 	void yyerror(const char *s);
+	int findPower(int num,int pow);
 %}
 
 //Defining token data types that flex can return
@@ -37,6 +38,7 @@ exp:	factor	{ $$ = $1; }
 factor:	term { $$ = $1; }
 	| factor MUL term { $$ = $1 * $3; }
 	| factor DIV term { $$ = $1 / $3; }
+	| factor POW term { $$ = findPower($1,$3); } 
 	;
 
 term: NUMBER { $$ = $1; }
@@ -52,4 +54,18 @@ void yyerror(const char *s)
 {
 	cout<<"Parse error."<<endl;
 	cout<<"Message : "<<s<<endl;
+}
+
+int findPower(int num,int pow)
+{
+	int temp=1;
+	//consider for pow<0 later
+	if(pow>0)
+	{
+		for(int i=1;i<=pow;i++)
+		{
+			temp=temp*num;
+		}
+	}
+	return temp;
 }

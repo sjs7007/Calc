@@ -56,7 +56,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 14 "calc2.y"
+#line 15 "calc2.y"
 
 	int ival; //integer
 	char *sval; //string 

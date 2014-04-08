@@ -9,12 +9,15 @@
 
 	void yyerror(const char *s);
 	int findPower(int num,int pow);
+	char symbolTable[52];
+	void updateSymbolTable(char symbol,int val);
 %}
 
 //Defining token data types that flex can return
-%union{
+%union
+{
 	int ival; //integer
-	char *sval; //string 
+	ichar *sval; //string 
 }
 
 //Defining token types
@@ -68,4 +71,19 @@ int findPower(int num,int pow)
 		}
 	}
 	return temp;
+}
+
+void updateSymbolTable(char symbol,int val)
+{
+	//Symbol table starts with A from 0-25 and a from 26-51
+	int x = symbol;
+	if(islower(symbol))
+	{
+		symbolTable[x-'a'] = val;
+	}
+	else if(isupper(symbol))
+	{
+		symbolTable[x-'A'+26] = val; 
+	}
+	
 }

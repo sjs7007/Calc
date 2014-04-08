@@ -85,5 +85,4 @@ void updateSymbolTable(char symbol,int val)
 	{
 		symbolTable[x-'A'+26] = val; 
 	}
-	
 }

@@ -11,6 +11,8 @@
 	int findPower(int num,int pow);
 	char symbolTable[52];
 	void updateSymbolTable(char symbol,int val);
+	int computeSymbolIndex(char symbol);
+	int symbolVal(char symbol); //returns value from symbol table
 %}
 
 //Defining token data types that flex can return
@@ -73,16 +75,30 @@ int findPower(int num,int pow)
 	return temp;
 }
 
-void updateSymbolTable(char symbol,int val)
+int computeSymbolIndex(char symbol)
 {
 	//Symbol table starts with A from 0-25 and a from 26-51
-	int x = symbol;
+	int id = -1;
 	if(islower(symbol))
 	{
-		symbolTable[x-'a'] = val;
+		id = symbol - 'a' + 26;
 	}
 	else if(isupper(symbol))
 	{
-		symbolTable[x-'A'+26] = val; 
+		id = symbol - 'A';
+	}
+	return id;
+}
+
+void updateSymbolIndex(char symbol, int val)
+{
+	int id = computeSymbolIndex(symbol);
+	if(id<0)
+	{
+		cout<<"No such symbol."<<endl;
+	}
+	else
+	{
+		symbolTable[id]=val;
 	}
 }

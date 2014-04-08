@@ -9,7 +9,7 @@
 
 	void yyerror(const char *s);
 	int findPower(int num,int pow);
-	char symbolTable[52];
+	int symbolTable[52];
 	void updateSymbolTable(char symbol,int val);
 	int computeSymbolIndex(char symbol);
 	int symbolVal(char symbol); //returns value from symbol table
@@ -19,7 +19,8 @@
 %union
 {
 	int ival; //integer
-	ichar *sval; //string 
+	//ichar *sval; //string
+	char cval; //char
 }
 
 //Defining token types
@@ -27,13 +28,21 @@
 %token ADD SUB MUL DIV POW
 %token EOL
 %type <ival> exp factor term calclist
+%token <ival> IDENTIFIER
+%token PRINT EQUALTO
 
 %%
 //grammar which bison will parse
 
 calclist: 
 	| calclist exp EOL { cout<<"= "<<$2<<endl; } //EOL is for end of expression
+	| calclist assignment EOL 
+	| calclist print EOL
 	;
+
+assignment:	IDENTIFIER EQUALTO exp { updateSymbolTable($1,$3); }
+
+print:	PRINT exp	{ cout<<"Printing...."<<$2<<endl; }
 
 exp:	factor	{ $$ = $1; }
 	| exp ADD factor { $$ = $1 + $3; } //eqv. to exp = exp + factor
@@ -47,11 +56,17 @@ factor:	term { $$ = $1; }
 	;
 
 term: NUMBER { $$ = $1; }
+	| IDENTIFIER { $$ = symbolVal($1); }
 	;
 %%
 
-main()
+int main()
 {
+	/*cout<<"STI : "<<computeSymbolIndex('a')<<endl;
+	updateSymbolTable('a',34);
+	cout<<symbolTable[26]<<endl;
+	cout<<symbolVal('a')<<endl;
+	*/
 	yyparse();
 }
 
@@ -90,15 +105,20 @@ int computeSymbolIndex(char symbol)
 	return id;
 }
 
-void updateSymbolIndex(char symbol, int val)
+void updateSymbolTable(char symbol, int val)
 {
 	int id = computeSymbolIndex(symbol);
 	if(id<0)
 	{
-		cout<<"No such symbol."<<endl;
+		cout<<"No such symbol."<<"*"<<symbol<<"*"<<endl;
 	}
 	else
 	{
 		symbolTable[id]=val;
 	}
+}
+
+int symbolVal(char symbol)
+{
+	return(symbolTable[computeSymbolIndex(symbol)]);
 }

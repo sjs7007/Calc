@@ -13,6 +13,9 @@
 "/" { return DIV; }
 "^" { return POW; }
 [0-9]+ { yylval.ival = atoi(yytext); return NUMBER; }
+"print" { return PRINT; }
+[a-zA-Z] { yylval.cval = yytext[0]; return IDENTIFIER; }
+"=" { return EQUALTO; }
 \n { return EOL; }
 \t ; //ignore white space
 . ; //ignore any other char

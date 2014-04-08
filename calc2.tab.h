@@ -45,7 +45,10 @@
      MUL = 261,
      DIV = 262,
      POW = 263,
-     EOL = 264
+     EOL = 264,
+     IDENTIFIER = 265,
+     PRINT = 266,
+     EQUALTO = 267
    };
 #endif
 
@@ -56,15 +59,16 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 15 "calc2.y"
+#line 20 "calc2.y"
 
 	int ival; //integer
-	char *sval; //string 
+	//ichar *sval; //string
+	char cval; //char
 
 
 
 /* Line 1676 of yacc.c  */
-#line 68 "calc2.tab.h"
+#line 72 "calc2.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
